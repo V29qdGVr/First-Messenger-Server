@@ -11,11 +11,11 @@ public class TcpMiniServer extends Thread{
 	private BufferedReader inFromClient;
 	private DataOutputStream outToClient;
 
-	private TcpServerMulti parentServer;
+	private TcpServer parentServer;
 
 	private boolean running = true;
 
-	public TcpMiniServer(Socket socket, BufferedReader inFromClient, DataOutputStream outToClient, TcpServerMulti parentServer) {
+	public TcpMiniServer(Socket socket, BufferedReader inFromClient, DataOutputStream outToClient, TcpServer parentServer) {
 
 		this.socket = socket;
 		this.inFromClient = inFromClient;

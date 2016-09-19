@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TcpServerMulti {
+public class TcpServer {
 
 	private Controller controller;
 
@@ -18,7 +18,7 @@ public class TcpServerMulti {
 	
 	private volatile boolean running = true;
 
-	public TcpServerMulti() {
+	public TcpServer() {
 		try {
 			serverSocket = new ServerSocket(8086);
 		} catch (IOException e) {

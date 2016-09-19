@@ -5,11 +5,11 @@ import net.kazior.messengerserver.model.Model;
 public class Controller {
 
 	private Model model;
-	private TcpServerMulti tcpServerMulti;
+	private TcpServer tcpServerMulti;
 	
 	public Controller() {
 		model = new Model();
-		tcpServerMulti = new TcpServerMulti();
+		tcpServerMulti = new TcpServer();
 		tcpServerMulti.setController(this);
 		tcpServerMulti.listen();
 	}
