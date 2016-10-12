@@ -1,4 +1,4 @@
-package net.kazior.messengerserver.controller;
+package net.kazior.messengerserver.controller.tcp;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -34,8 +34,8 @@ public class TcpMiniServer extends Thread{
 			String receivedMessage = inFromClient.readLine(); // returns null if the other end was not closed properly
 			if (receivedMessage != null) {
 				System.out.println("Received from [CLIENT" + socket.getInetAddress() + "/]: \"" + receivedMessage + "\".");
-				parentServer.sendMessageToController(receivedMessage);
-				parentServer.sendMessageToAllClients(receivedMessage);
+				String backCommand = parentServer.sendCommandToController(receivedMessage);
+				sendMessageToClient(backCommand);
 			} else {
 				System.out.println("[CLIENT" + socket.getInetAddress() + "/] has closed.");
 				shutDown();
@@ -46,12 +46,14 @@ public class TcpMiniServer extends Thread{
 		}
 	}
 
-	public void sendMessageToClient(String message) {
+	public boolean sendMessageToClient(String message) {
 		try {
 			outToClient.writeBytes(message + '\n');
 		} catch (IOException e) {	// very unlikely, we don't have to do anything with it, because our loop will do
 			System.out.println("Problem while sending a message.");
+			return false;
 		}
+		return true;
 	}
 
 	public void closeConnections() { // if there are any connections and they are opened, close them in opposite order to opening
