@@ -1,4 +1,4 @@
-package net.kazior.messengerserver.controller;
+package net.kazior.messengerserver.controller.tcp;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.kazior.messengerserver.controller.Controller;
 
 public class TcpServer {
 
@@ -75,13 +77,16 @@ public class TcpServer {
 	}
 	
 
-	public void sendMessageToAllClients(String message) {
+	public boolean sendMessageToAllClients(String message) {
+		boolean success = true;
 		for (TcpMiniServer ms : tcpMiniServers)
-			ms.sendMessageToClient(message);
+			if (ms.sendMessageToClient(message) == false)
+				success = false;
+		return success;
 	}
 
-	public void sendMessageToController(String message) {
-		controller.receiveMessage(message);
+	public String sendCommandToController(String message) {
+		return controller.executeCommand(message);
 	}
 
 	public void removeMiniServer(TcpMiniServer tcpMiniServer) {
